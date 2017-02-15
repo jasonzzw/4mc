@@ -64,9 +64,6 @@ public class FourMcLineRecordReader implements RecordReader<LongWritable, Text> 
 
 	private int maxLineLen = Integer.MAX_VALUE;
 
-	private final LongWritable key = new LongWritable();
-	private final Text value = new Text();
-
 	public String getName() {
 		return "fourmc";
 	}
@@ -154,10 +151,6 @@ public class FourMcLineRecordReader implements RecordReader<LongWritable, Text> 
 				return false;
 			}
 			pos = fileIn.getPos();
-
-			// set the value, using copy
-			key.set(this.key.get());
-			value.set(this.value);
 			return true;
 		}
 		return false;
