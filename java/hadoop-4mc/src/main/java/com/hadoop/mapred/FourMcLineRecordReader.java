@@ -38,7 +38,7 @@ import java.io.IOException;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
@@ -52,7 +52,7 @@ import org.apache.hadoop.util.LineReader;
  * Reads line from a 4mc compressed text file. Treats keys as offset in file and
  * value as line.
  */
-public class FourMcLineRecordReader implements RecordReader<LongWritable, Text> {
+public class FourMcLineRecordReader implements RecordReader<Text, Text> {
 
 	public static final String MAX_LINE_LEN_CONF = "com.hadoop.mapred.fourmc.line.recordreader.max.line.length";
 
@@ -73,8 +73,8 @@ public class FourMcLineRecordReader implements RecordReader<LongWritable, Text> 
 	}
 
 	@Override
-	public LongWritable createKey() {
-		return new LongWritable();
+	public Text createKey() {
+		return new Text();
 	}
 
 	@Override
@@ -141,16 +141,17 @@ public class FourMcLineRecordReader implements RecordReader<LongWritable, Text> 
 	}
 
 	@Override
-	public boolean next(LongWritable key, Text value) throws IOException {
+	public boolean next(Text key, Text value) throws IOException {
 		// exactly same as EB one
 		if (pos <= end) {
-			key.set(pos);
-
 			int newSize = in.readLine(value, maxLineLen);
 			if (newSize == 0) {
 				return false;
 			}
 			pos = fileIn.getPos();
+			
+			//set dummy key
+			key.set("");
 			return true;
 		}
 		return false;

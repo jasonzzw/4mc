@@ -48,7 +48,7 @@ import org.apache.hadoop.mapred.Reporter;
  */
 public class FourMcTextInputFormat extends FourMcInputFormat {
     @Override
-    public RecordReader<LongWritable, Text> getRecordReader(InputSplit split, JobConf job, Reporter reporter) {
+    public RecordReader<Text, Text> getRecordReader(InputSplit split, JobConf job, Reporter reporter) {
         try{
             return new FourMcLineRecordReader(split, job);
         }catch(Exception e){
