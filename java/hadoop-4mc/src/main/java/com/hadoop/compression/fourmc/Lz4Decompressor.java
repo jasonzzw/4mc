@@ -231,8 +231,10 @@ public class Lz4Decompressor implements Decompressor {
     public synchronized void reset() {
         finished = false;
         compressedDirectBufLen = 0;
-        uncompressedDirectBuf.limit(directBufferSize);
-        uncompressedDirectBuf.position(directBufferSize);
+        if(uncompressedDirectBuf!=null){
+            uncompressedDirectBuf.limit(directBufferSize);
+            uncompressedDirectBuf.position(directBufferSize);
+        }
         userBufOff = userBufLen = 0;
     }
 
