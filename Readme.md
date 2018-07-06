@@ -103,6 +103,17 @@ also with Spark. Flink examples will be added soon, but it's straightforward lik
 As you can see in the examples, 4mc can be used with text input/output but also it can leverge **ElephantBird**
 framework to process protobuf encoded binary data.
 
+## Misc
+
+After deploying this library to a hdfs cluster with proper settings, the output
+format of a hadoop streaming job could be assigned to 4mc with the following
+extra parameters to the execution command.
+
+```
+-D mapreduce.output.fileoutputformat.compress=true \
+-D mapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.fourmc.FourMcCodec \
+```
+
 ## How To Contribute
 
 Bug fixes, features, and documentation improvements are welcome!
